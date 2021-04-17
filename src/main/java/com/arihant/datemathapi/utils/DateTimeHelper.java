@@ -1,5 +1,9 @@
 package com.arihant.datemathapi.utils;
 
+import com.arihant.datemathapi.service.DateMathController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,7 +18,8 @@ public class DateTimeHelper {
         // http://localhost:8080/calculate?daysOrHours=5&unitOfTime=1&operator=1&userDateTime=02/13/1974
         String answer = "";
         // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("User Date " +userDateTime);
+        Logger logger = LoggerFactory.getLogger(DateTimeHelper.class);
+        logger.info("User Date " +userDateTime);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         dateFormat.setLenient(false);
         // System.out.println("User Date " + dateFormat.format(userDateTime));
@@ -36,7 +41,7 @@ public class DateTimeHelper {
         // Convert calendar back to Date
         Date currentDatePlusOne = c.getTime();
 
-        System.out.println("Updated Date " + dateFormat.format(currentDatePlusOne));
+        logger.info("Updated Date " + dateFormat.format(currentDatePlusOne));
         return dateFormat.format(currentDatePlusOne);
     }
 }
