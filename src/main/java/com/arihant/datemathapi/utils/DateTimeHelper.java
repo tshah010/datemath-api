@@ -20,7 +20,7 @@ public class DateTimeHelper {
         // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Logger logger = LoggerFactory.getLogger(DateTimeHelper.class);
         logger.info("User Date " +userDateTime);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         dateFormat.setLenient(false);
         // System.out.println("User Date " + dateFormat.format(userDateTime));
 
@@ -31,9 +31,10 @@ public class DateTimeHelper {
         // c.add(Calendar.YEAR, 2);
         // c.add(Calendar.MONTH, 1);
         int amount = Integer.parseInt(operator) * Integer.parseInt(daysOrHours);
-        switch (unitOfTime) {
-            case DAYS: c.add(Calendar.DATE, amount);
-            case HOURS: c.add(Calendar.HOUR, amount);
+        switch (String.valueOf(unitOfTime)) {
+            case DAYS -> c.add(Calendar.DATE, amount);
+            case HOURS -> c.add(Calendar.HOUR, amount);
+            default -> throw new IllegalStateException("Unexpected value: " + unitOfTime);
         }
         // c.add(Calendar.MINUTE, 30);
         // c.add(Calendar.SECOND, 50);
