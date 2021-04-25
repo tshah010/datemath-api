@@ -20,8 +20,8 @@ import java.text.ParseException;
 public class DateMathController {
 
     @GetMapping(value = "/calculate", produces = "application/json")
-    public ResponseEntity<?> calculate(@RequestParam(value = "daysOrHours", defaultValue = "-1") String daysOrHours,
-                                      @RequestParam(value = "unitOfTime", defaultValue = "-1") String unitOfTime,
+    public ResponseEntity<?> calculate(@RequestParam(value = "daysOrHours", defaultValue = "0") String daysOrHours,
+                                      @RequestParam(value = "unitOfTime", defaultValue = "0") String unitOfTime,
                                       @RequestParam(value = "operator", defaultValue = "-1") String operator,
                                       @RequestParam(value = "userDateTime", defaultValue = "-1") String userDateTime) {
         Logger logger = LoggerFactory.getLogger(DateMathController.class);
@@ -33,7 +33,11 @@ public class DateMathController {
         } catch (ParseException e) {
             logger.error(e.getLocalizedMessage());
             return ResponseEntity.badRequest()
-                    .body(new APIError(1, String.format("Can not parse '%s'.It must be in \"MM/dd/yyyy\" format.", userDateTime)));
+                    .body(new APIError(1, String.format("Unable to parse %s. It must be in \"MM-dd-yyyy HH:mm\" format.", userDateTime)));
+        } catch (Exception e) {
+            logger.error(e.getLocalizedMessage());
+            return ResponseEntity.badRequest()
+                    .body(new APIError(2, e.getMessage()));
         }
     }
 }

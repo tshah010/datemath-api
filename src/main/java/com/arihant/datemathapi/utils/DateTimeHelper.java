@@ -40,7 +40,7 @@ public class DateTimeHelper {
         }
         Date currentDatePlusOne = c.getTime();
 
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm z");
         String result = outputDateFormat.format(currentDatePlusOne);
         logger.info("Updated Date " + result);
         return result;
