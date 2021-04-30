@@ -26,10 +26,10 @@ public class DateMathControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
-        ResponseEntity<?> responseEntity = dateMathController.calculate("24", "2", "1", "12-03-2001");
+        ResponseEntity<?> responseEntity = dateMathController.calculate("24", "2", "1", "12-03-2001 00:00");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-        assertThat(((Result) Objects.requireNonNull(responseEntity.getBody())).getAnswer().equals("12-27-2001"));
+        assertThat(((Result) Objects.requireNonNull(responseEntity.getBody())).getAnswer().equals("12-27-2001 00:00"));
 
     }
 }
