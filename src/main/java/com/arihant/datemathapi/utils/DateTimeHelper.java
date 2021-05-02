@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class DateTimeHelper {
@@ -45,4 +46,30 @@ public class DateTimeHelper {
         logger.info("Updated Date " + result);
         return result;
     }
+
+    public static String addSubtractDates(String userStartTime, String userEndTime) throws ParseException {
+        Logger logger = LoggerFactory.getLogger(DateTimeHelper.class);
+        logger.debug(String.format("User Dates are %s amd %s", userStartTime, userEndTime));
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        inputDateFormat.setLenient(false);
+
+        Date startDate = inputDateFormat.parse(userStartTime);
+        Date endDate = inputDateFormat.parse(userEndTime);
+
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(startDate);
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(endDate);
+
+        long resultInMillis = startCalendar.getTimeInMillis() - endCalendar.getTimeInMillis();
+        long resultDays = TimeUnit.MILLISECONDS.toDays(resultInMillis);
+        long resultHours = TimeUnit.MILLISECONDS.toHours(resultInMillis - resultDays*24*60*60*1000) ;
+        long resultMinutes = TimeUnit.MILLISECONDS.toMinutes(resultInMillis - resultDays*24*60*60*1000 - resultHours*60*60*1000);
+
+        String result = String.format("%d days, %d hours, %d minutes", resultDays,resultHours, resultMinutes );
+        logger.info(result);
+
+        return result;
+    }
+
 }

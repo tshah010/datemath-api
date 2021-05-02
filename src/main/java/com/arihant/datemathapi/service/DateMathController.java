@@ -35,7 +35,27 @@ public class DateMathController {
             return ResponseEntity.badRequest()
                     .body(new APIError(1, String.format("Unable to parse %s. It must be in \"MM-dd-yyyy HH:mm\" format.", userDateTime)));
         } catch (Exception e) {
-            logger.error(e.getLocalizedMessage());
+            logger.error("Unknown Exception",e);
+            return ResponseEntity.badRequest()
+                    .body(new APIError(2, e.getMessage()));
+        }
+    }
+
+    @GetMapping(value = "/calculate-date-difference", produces = "application/json")
+    public ResponseEntity<?> calculateDateDifference(@RequestParam(value = "userStartDateTime", defaultValue = "0") String userStartDateTime,
+                                       @RequestParam(value = "userEndDateTime", defaultValue = "0") String userEndDateTime) {
+        Logger logger = LoggerFactory.getLogger(DateMathController.class);
+        try {
+            String answer = DateTimeHelper.addSubtractDates(userStartDateTime, userEndDateTime);
+            Result resultModel = new Result(answer);
+            return ResponseEntity.ok()
+                    .body(resultModel);
+        } catch (ParseException e) {
+            logger.error("ParseException", e);
+            return ResponseEntity.badRequest()
+                    .body(new APIError(1, String.format("Unable to parse %s or %s. It must be in \"MM-dd-yyyy HH:mm\" format.", userStartDateTime, userEndDateTime)));
+        } catch (Exception e) {
+            logger.error("Unknown Exception",e);
             return ResponseEntity.badRequest()
                     .body(new APIError(2, e.getMessage()));
         }
