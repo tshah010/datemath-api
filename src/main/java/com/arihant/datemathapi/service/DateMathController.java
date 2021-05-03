@@ -67,8 +67,8 @@ public class DateMathController {
 
     private void logHeaders(String requestName, Map<String, String> headers) {
         Logger logger = LoggerFactory.getLogger(DateMathController.class);
-        logger.info(String.format("Headers received for %s are:", requestName));
-        headers.forEach((key, value) -> logger.info(String.format("Header '%s' = %s", key, value)));
+        logger.debug(String.format("Headers received for %s are:", requestName));
+        headers.forEach((key, value) -> logger.debug(String.format("Header '%s' = %s", key, value)));
 
     }
 }
