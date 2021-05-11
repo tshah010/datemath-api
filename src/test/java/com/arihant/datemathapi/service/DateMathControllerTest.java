@@ -33,7 +33,7 @@ public class DateMathControllerTest {
         headers.put("accept-language", "en-US");
         headers.put("Referer", "http://unittest:3000/");
 
-        ResponseEntity<?> responseEntity = dateMathController.calculate("24", "2", "1", "12-03-2001 00:00", headers);
+        ResponseEntity<?> responseEntity = dateMathController.calculate(24, 2, 1, "12-03-2001 00:00", headers);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(((Result) Objects.requireNonNull(responseEntity.getBody())).getAnswer()).isEqualTo("Thu, 27 Dec 2001 00:00 PST");

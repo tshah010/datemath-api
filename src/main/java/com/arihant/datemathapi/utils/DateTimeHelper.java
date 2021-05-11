@@ -19,7 +19,7 @@ public class DateTimeHelper {
     static final String MONTHS = "4";
     static final String YEARS = "5";
 
-    public static String computeDateTimeQuery(String daysOrHours, String unitOfTime, String operator, String userDateTime) throws ParseException {
+    public static String computeDateTimeQuery(Integer daysOrHours, Integer unitOfTime, Integer operator, String userDateTime) throws ParseException {
         String answer = "";
         Logger logger = LoggerFactory.getLogger(DateTimeHelper.class);
         logger.info("User Date " +userDateTime);
@@ -29,7 +29,7 @@ public class DateTimeHelper {
         Calendar c = Calendar.getInstance();
         c.setTime(inputDateFormat.parse(userDateTime));
 
-        int amount = Integer.parseInt(operator) * Integer.parseInt(daysOrHours);
+        int amount = operator * daysOrHours;
         switch (String.valueOf(unitOfTime)) {
             case MINUTES -> c.add(Calendar.MINUTE, amount);
             case DAYS -> c.add(Calendar.DATE, amount);
